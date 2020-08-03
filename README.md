@@ -13,7 +13,7 @@
 > Pré-condition: yarn;  
 
 - clone this repository  
-  `git clone https://github.com/cezarcozta/proffy-web`  
+  `git clone https://github.com/cezarcozta/proffy-web.git`  
 
 - Enter in the project folder  
   `cd proffy-web`  
