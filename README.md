@@ -13,7 +13,7 @@
 > Pré-condition: yarn;  
 
 - clone this repository  
-  `git clone (https://github.com/cezarcozta/proffy-web)`  
+  `git clone https://github.com/cezarcozta/proffy-web`  
 
 - Enter in the project folder  
   `cd proffy-web`  
@@ -25,4 +25,4 @@
   `yarn start`  
 
 - Visit localhost on web browser  
-  `browser: (http://localhost:3000)`  
+  `browser: http://localhost:3000`  
