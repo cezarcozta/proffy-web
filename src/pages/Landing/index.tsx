@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import logoImg from '../../assets/images/logo.svg';
@@ -9,38 +9,55 @@ import giveClassesIcon from '../../assets/images/icons/give-classes.svg';
 import purpleHeart from '../../assets/images/icons/purple-heart.svg';
 
 import './styles.css';
+import api from '../../services/api';
 
-const Landing: React.FC = () => (
-  <div id="page-landing">
-    <div id="page-landing-content" className="container">
-      <div className="logo-container">
-        <img src={logoImg} alt="Proffy" />
-        <h2>Sua plataforma de estudos online.</h2>
+const Landing: React.FC = () => {
+  const [totalConnections, setTotalConnections] = useState(0);
+
+  useEffect(() => {
+    async function loadConnections(){
+      const response = await api.get('/connections');
+
+      const { total } = response.data;
+
+      setTotalConnections(total);
+    }
+
+    loadConnections();
+  }, []);
+
+  return (
+    <div id="page-landing">
+      <div id="page-landing-content" className="container">
+        <div className="logo-container">
+          <img src={logoImg} alt="Proffy" />
+          <h2>Sua plataforma de estudos online.</h2>
+        </div>
+
+        <img 
+          src={landingImg} 
+          className="hero-image" 
+          alt="Plataforma de estudos"
+        />
+
+        <div className="buttons-container">
+          <Link to="/study" className="study">
+            <img src={studyIcon} alt="Estudar"/>
+            Estudar
+          </Link>
+
+          <Link to="/give-classes" className="give-classes">
+            <img src={giveClassesIcon} alt="Dar Aulas" />
+            Dar Aula
+          </Link>
+        </div>
+
+        <span className="total-connections">
+          Total de { totalConnections } conexões já realizadas <img src={purpleHeart} alt="Coração roxo" />
+        </span>
       </div>
-
-      <img 
-        src={landingImg} 
-        className="hero-image" 
-        alt="Plataforma de estudos"
-      />
-
-      <div className="buttons-container">
-        <Link to="/study" className="study">
-          <img src={studyIcon} alt="Estudar"/>
-          Estudar
-        </Link>
-
-        <Link to="/give-classes" className="give-classes">
-          <img src={giveClassesIcon} alt="Dar Aulas" />
-          Dar Aula
-        </Link>
-      </div>
-
-      <span className="total-connections">
-        Total de 200 conexões já realizadas <img src={purpleHeart} alt="Coração roxo" />
-      </span>
     </div>
-  </div>
-);
+  );
+};
 
 export default Landing;
