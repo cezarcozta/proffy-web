@@ -2,35 +2,61 @@ import React from 'react';
 
 import './styles.css';
 
-import whatsappIcon from '../../assets/images/icons/whatsapp.svg'
+import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
+import api from '../../services/api';
 
-const TeacherItem: React.FC = () => {
+export interface ITeacher {
+  id: number;
+  name: string;
+  avatar: string;
+  bio: string;
+  cost: string;
+  subject: string;
+  whatsapp: string;
+}
+
+interface TeacherItemProps {
+  teacher: ITeacher
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  async function createNewConnection() {
+    try {
+      await api.post('connections', {
+        user_id: teacher.id
+      });
+    } catch (error) {
+      throw new Error();
+    }
+  }
   return (
     <article className="teacher-item">
       <header>
-        <img src="https://avatars1.githubusercontent.com/u/6342828?s=400&u=7d7d56e50bd71c80cb478755d1a40016af641a10&v=4" alt="César Costa"/>
+        <img src={teacher.avatar} alt={teacher.name}/>
         <div>
-          <strong>César Augusto Costa</strong>
-          <span>Biologia</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
       
       <p>
-        Entusiasta das melhores biologias avançadas.
-        <br /><br />
-        Apaixonado por animaizinhos e por células.
+        {teacher.bio}
       </p>
 
       <footer>
         <p>
           Preço/Hora
-          <strong>R$ 75,00</strong>
+          <strong>{teacher.cost}</strong>
         </p>
         
-        <button type="button">
+        <a
+          onClick={createNewConnection}
+          href={`https://wa.me/${teacher.whatsapp}`} 
+          type="button"
+        >
           <img src={whatsappIcon} alt="Whatsapp"/>
           Entrar em contato
-        </button>
+        </a>
       </footer>
     </article>
   );
